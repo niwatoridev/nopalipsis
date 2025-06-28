@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧟‍♂️ EL NOPALIPSIS - Complete Survival Mod Guide</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Butcherman&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f1a0f 100%);
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .blood-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .blood-drip {
+            position: absolute;
+            width: 3px;
+            height: 60px;
+            background: linear-gradient(to bottom, #8b0000, transparent);
+            animation: drip 8s ease-in-out infinite;
+        }
+
+        @keyframes drip {
+            0% { top: -60px; opacity: 0; }
+            10% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { top: 100vh; opacity: 0; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, rgba(139, 0, 0, 0.4), rgba(255, 0, 0, 0.2));
+            border: 3px solid #8b0000;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.5), inset 0 0 20px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .main-title {
+            font-family: 'Nosifer', cursive;
+            font-size: 3.5em;
+            color: #ff3333;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.8);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 0, 0, 0.8); }
+            to { text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 0, 0, 1), 0 0 40px rgba(255, 100, 100, 0.5); }
+        }
+
+        .subtitle {
+            font-family: 'Butcherman', cursive;
+            font-size: 1.5em;
+            color: #cccccc;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-banner {
+            background: linear-gradient(45deg, rgba(0, 255, 0, 0.2), rgba(0, 150, 0, 0.3));
+            border: 2px solid #00aa00;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.3em;
+            margin: 25px 0;
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.3);
+        }
+
+        .warning-banner {
+            background: linear-gradient(45deg, rgba(255, 69, 0, 0.3), rgba(139, 0, 0, 0.4));
+            border: 3px solid #ff4500;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 25px 0;
+            box-shadow: 0 0 25px rgba(255, 69, 0, 0.3);
+            animation: urgentBlink 2s infinite;
+        }
+
+        @keyframes urgentBlink {
+            0%, 70% { opacity: 1; }
+            85%, 100% { opacity: 0.7; }
+        }
+
+        .quick-install {
+            background: rgba(255, 215, 0, 0.2);
+            border: 3px solid #ffd700;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .quick-install-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            color: #000;
+            padding: 15px 30px;
+            margin: 10px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .quick-install-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(255, 215, 0, 0.4);
+        }
+
+        .mods-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.2);
+        }
+
+        .mods-table th {
+            background: linear-gradient(45deg, #8b0000, #a00000);
+            color: #fff;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid #ff4444;
+        }
+
+        .mods-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #444;
+            transition: all 0.3s ease;
+        }
+
+        .mods-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .mods-table tr:hover {
+            background: rgba(255, 0, 0, 0.1);
+            transform: scale(1.01);
+        }
+
+        .mod-order {
+            font-weight: bold;
+            color: #ff6666;
+            font-size: 1.1em;
+            text-align: center;
+            min-width: 50px;
+        }
+
+        .mod-name {
+            font-weight: bold;
+            color: #00ffff;
+            font-size: 1.05em;
+        }
+
+        .workshop-id {
+            font-family: 'Courier New', monospace;
+            color: #ffff00;
+            font-size: 0.9em;
+        }
+
+        .workshop-link {
+            color: #ffaa00;
+            text-decoration: none;
+            padding: 8px 15px;
+            background: rgba(255, 170, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid #ffaa00;
+            transition: all 0.3s ease;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .workshop-link:hover {
+            background: rgba(255, 170, 0, 0.4);
+            box-shadow: 0 0 15px rgba(255, 170, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .dependency {
+            background: rgba(255, 200, 0, 0.15) !important;
+            border-left: 5px solid #ffaa00;
+        }
+
+        .core-mod {
+            background: rgba(255, 0, 0, 0.15) !important;
+            border-left: 5px solid #ff4444;
+        }
+
+        .category-header {
+            background: linear-gradient(45deg, #333, #555) !important;
+            color: #fff !important;
+            font-weight: bold;
+            text-align: center;
+            font-size: 1.2em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .steps-section {
+            background: rgba(20, 20, 20, 0.9);
+            border: 2px solid #00aa00;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+        }
+
+        .section-title {
+            font-family: 'Butcherman', cursive;
+            font-size: 1.8em;
+            color: #00ff00;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-icon {
+            font-size: 1.2em;
+            margin-right: 15px;
+        }
+
+        .steps-list {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps-list li {
+            counter-increment: step-counter;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-left: 5px solid #00ff00;
+            border-radius: 8px;
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .steps-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #00ff00;
+            color: #000;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .server-info {
+            background: rgba(139, 0, 0, 0.3);
+            border: 2px solid #ff6666;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .server-address {
+            font-size: 1.8em;
+            color: #ffff00;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .important-note {
+            background: rgba(255, 165, 0, 0.2);
+            border: 2px solid #ffa500;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: #ffaa00;
+        }
+
+        .progress-tracker {
+            background: rgba(0, 100, 0, 0.2);
+            border: 2px solid #00aa00;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #00ff00, #00aa00);
+            width: 0%;
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            color: #666;
+            border-top: 2px solid #333;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5em;
+            }
+            
+            .mods-table {
+                font-size: 0.85em;
+            }
+            
+            .mods-table th,
+            .mods-table td {
+                padding: 8px;
+            }
+
+            .workshop-link {
+                padding: 6px 10px;
+                font-size: 0.9em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="blood-overlay">
+        <div class="blood-drip" style="left: 3%; animation-delay: 0s;"></div>
+        <div class="blood-drip" style="left: 12%; animation-delay: 2s;"></div>
+        <div class="blood-drip" style="left: 23%; animation-delay: 4s;"></div>
+        <div class="blood-drip" style="left: 37%; animation-delay: 1s;"></div>
+        <div class="blood-drip" style="left: 51%; animation-delay: 3s;"></div>
+        <div class="blood-drip" style="left: 68%; animation-delay: 5s;"></div>
+        <div class="blood-drip" style="left: 79%; animation-delay: 1.5s;"></div>
+        <div class="blood-drip" style="left: 91%; animation-delay: 3.5s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">🧟‍♂️ EL NOPALIPSIS 🧟‍♂️</h1>
+            <div class="subtitle">Ultimate Apocalypse Mod Collection - 30 Mods</div>
+        </div>
+
+        <div class="stats-banner">
+            🎯 <strong>ENHANCED SURVIVAL EXPERIENCE:</strong> 32 Combat, Vehicle, UI & Gameplay Mods | Louisville Neighborhood Spawns | Arsenal + Brita's Weapon Expansion 🎯
+        </div>
+
+        <div class="warning-banner">
+            ⚠️ <strong>CRITICAL OUTBREAK PROTOCOL:</strong> ALL survivors must install these 32 mods in EXACT order to enter the quarantine zone! ⚠️
+        </div>
+
+        <div class="quick-install">
+            <h3 style="color: #ffd700; margin-bottom: 15px;">⚡ QUICK INSTALL COLLECTIONS ⚡</h3>
+            <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3511183975" class="quick-install-btn" target="_blank">
+                📦 Subscribe to Full Collection
+            </a>
+            <p style="margin-top: 15px; color: #ffaa00;">
+                <strong>One-click install:</strong> Automatically downloads all 30 mods in correct order!
+            </p>
+        </div>
+
+        <div class="progress-tracker">
+            <h3 style="color: #00ff00; margin-bottom: 10px;">📊 INSTALLATION PROGRESS</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            <div id="progressText">0 / 32 Mods Installed</div>
+        </div>
+
+        <table class="mods-table">
+            <thead>
+                <tr>
+                    <th>Order</th>
+                    <th>Mod Name</th>
+                    <th>Workshop ID</th>
+                    <th>Steam Workshop Link</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- DEPENDENCIES -->
+                <tr class="category-header">
+                    <td colspan="5">🔧 CRITICAL DEPENDENCIES (Install First)</td>
+                </tr>
+                <tr class="dependency">
+                    <td class="mod-order">1</td>
+                    <td class="mod-name">damnlib</td>
+                    <td class="workshop-id">3171167894</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3171167894" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔧 Essential dependency library</td>
+                </tr>
+                <tr class="dependency">
+                    <td class="mod-order">2</td>
+                    <td class="mod-name">modoptions</td>
+                    <td class="workshop-id">2169435993</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2169435993" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔧 Mod configuration framework</td>
+                </tr>
+                <tr class="core-mod">
+                    <td class="mod-order">3</td>
+                    <td class="mod-name">Arsenal[26] GunFighter Mod [2.0]</td>
+                    <td class="workshop-id">2297098490</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2297098490" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔫 Essential for Brita's weapon mods</td>
+                </tr>
+
+                <!-- CORE EXPANSION -->
+                <tr class="category-header">
+                    <td colspan="5">⚔️ CORE WEAPON & ARMOR EXPANSION</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">4</td>
+                    <td class="mod-name">Brita's Weapon Pack</td>
+                    <td class="workshop-id">2200148440</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2200148440" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔫 Massive weapon expansion</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">5</td>
+                    <td class="mod-name">Brita's Armor Pack</td>
+                    <td class="workshop-id">2460154811</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2460154811" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🛡️ Tactical armor expansion</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">6</td>
+                    <td class="mod-name">Advanced trajectory</td>
+                    <td class="workshop-id">2895102994</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2895102994" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🎯 Realistic ballistics system</td>
+                </tr>
+
+                <!-- VEHICLES -->
+                <tr class="category-header">
+                    <td colspan="5">🚗 VEHICLES & TRANSPORT</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">7</td>
+                    <td class="mod-name">KI5trailers</td>
+                    <td class="workshop-id">3330403100</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3330403100" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🚛 Vehicle trailers system</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">8</td>
+                    <td class="mod-name">'49 Dodge Power Wagon Crew Cab</td>
+                    <td class="workshop-id">2900580391</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2900580391" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🚙 Classic pickup truck</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">9</td>
+                    <td class="mod-name">Fuel Side Indicator</td>
+                    <td class="workshop-id">2616986064</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2616986064" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>⛽ Vehicle fuel side display</td>
+                </tr>
+
+                <!-- UI & INTERFACE -->
+                <tr class="category-header">
+                    <td colspan="5">🖥️ USER INTERFACE ENHANCEMENTS</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">10</td>
+                    <td class="mod-name">Equipment UI - Paper Doll</td>
+                    <td class="workshop-id">2950902979</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2950902979" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>👕 Visual equipment interface</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">11</td>
+                    <td class="mod-name">ExtraMapSymbols</td>
+                    <td class="workshop-id">2701170568</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2701170568" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🗺️ Enhanced map symbols</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">12</td>
+                    <td class="mod-name">TheStar</td>
+                    <td class="workshop-id">2619072426</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2619072426" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>⭐ Weapon condition indicator</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">13</td>
+                    <td class="mod-name">VISIBLE_BACKPACK_BACKGROUND</td>
+                    <td class="workshop-id">2808679062</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2808679062" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🎒 Backpack border visibility</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">14</td>
+                    <td class="mod-name">Plain Moodles</td>
+                    <td class="workshop-id">3008416736</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3008416736" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>😐 Clean moodle interface</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">15</td>
+                    <td class="mod-name">Minimal Display Bars</td>
+                    <td class="workshop-id">2004998206</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2004998206" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>📊 Health/stats overlay</td>
+                </tr>
+
+                <!-- QUALITY OF LIFE -->
+                <tr class="category-header">
+                    <td colspan="5">✨ QUALITY OF LIFE IMPROVEMENTS</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">16</td>
+                    <td class="mod-name">Better Flashlights [FIXED]</td>
+                    <td class="workshop-id">3050927523</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3050927523" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔦 Enhanced lighting system</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">17</td>
+                    <td class="mod-name">Visible Holster</td>
+                    <td class="workshop-id">2901552077</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2901552077" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔫 Visual holster display</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">18</td>
+                    <td class="mod-name">Common Sense</td>
+                    <td class="workshop-id">2875848298</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2875848298" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🧠 Logical game improvements</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">19</td>
+                    <td class="mod-name">Rain Wash</td>
+                    <td class="workshop-id">2657661246</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2657661246" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🌧️ Rain cleans blood/dirt</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">20</td>
+                    <td class="mod-name">Skizot's Carryable Everything</td>
+                    <td class="workshop-id">2921029369</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2921029369" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>📦 Expanded carrying options</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">21</td>
+                    <td class="mod-name">I Don't Need A Lighter</td>
+                    <td class="workshop-id">2714198296</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2714198296" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔥 Light cigarettes on stoves</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">22</td>
+                    <td class="mod-name">GeneratorTimeRemaining</td>
+                    <td class="workshop-id">2883397918</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2883397918" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>⚡ Generator fuel timer</td>
+                </tr>
+
+                <!-- MULTIPLAYER -->
+                <tr class="category-header">
+                    <td colspan="5">👥 MULTIPLAYER ENHANCEMENTS</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">23</td>
+                    <td class="mod-name">Players On Map</td>
+                    <td class="workshop-id">2879960936</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2879960936" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🗺️ See other players on map</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">24</td>
+                    <td class="mod-name">Pillow's Random Spawns [B42]</td>
+                    <td class="workshop-id">1911132112</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1911132112" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🏙️ Louisville neighborhood spawns</td>
+                </tr>
+
+                <!-- GAMEPLAY -->
+                <tr class="category-header">
+                    <td colspan="5">🎮 GAMEPLAY MECHANICS</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">25</td>
+                    <td class="mod-name">The Only Cure - Rebuilt</td>
+                    <td class="workshop-id">3236152598</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3236152598" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>💉 Alternative zombie cure</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">26</td>
+                    <td class="mod-name">Skill Recovery Journal</td>
+                    <td class="workshop-id">2503622437</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2503622437" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>📚 Death skill recovery</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">27</td>
+                    <td class="mod-name">Lockpicking! Just. Lockpicking.</td>
+                    <td class="workshop-id">2056238799</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2056238799" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔓 Lock picking mechanics</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">28</td>
+                    <td class="mod-name">Authentic Animations</td>
+                    <td class="workshop-id">2207282444</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2207282444" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🎭 Enhanced player animations</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">29</td>
+                    <td class="mod-name">jigga's Green Fire</td>
+                    <td class="workshop-id">1703604612</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=1703604612" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🔥 Atmospheric fire effects</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">30</td>
+                    <td class="mod-name">Weapon Condition Indicator_ES</td>
+                    <td class="workshop-id">2835829018</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2835829018" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🇪🇸 Spanish weapon condition UI</td>
+                </tr>
+
+                <!-- VEHICLES -->
+                <tr class="category-header">
+                    <td colspan="5">🏎️ LUXURY & PERFORMANCE VEHICLES</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">31</td>
+                    <td class="mod-name">Ferrari Testarossa</td>
+                    <td class="workshop-id">2365457951</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2365457951" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🏎️ Legendary Ferrari sports car</td>
+                </tr>
+                <tr>
+                    <td class="mod-order">32</td>
+                    <td class="mod-name">'90 BMW 3 Series (E30)</td>
+                    <td class="workshop-id">3110913021</td>
+                    <td><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3110913021" class="workshop-link" target="_blank" onclick="updateProgress()">🔗 Subscribe</a></td>
+                    <td>🚗 Classic BMW from 1990</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="steps-section">
+            <div class="section-title">
+                <span class="section-icon">📋</span>SURVIVAL INSTALLATION PROTOCOL
+            </div>
+            <ol class="steps-list">
+                <li><strong>Subscribe to ALL 32 mods</strong> by clicking each "🔗 Subscribe" link above in exact order</li>
+                <li><strong>Wait for Steam to download</strong> all mods completely (check Downloads tab)</li>
+                <li><strong>Launch Project Zomboid</strong> from Steam</li>
+                <li><strong>Navigate to MODS menu</strong> in the main menu</li>
+                <li><strong>Enable ALL 32 mods</strong> - they should auto-arrange in correct load order</li>
+                <li><strong>Create new game</strong> or load existing save with mods enabled</li>
+                <li><strong>Connect to EL NOPALIPSIS</strong> using server info below</li>
+            </ol>
+        </div>
+
+        <div class="server-info">
+            <div class="section-title" style="justify-content: center; color: #ff6666;">
+                <span class="section-icon">🏭</span>QUARANTINE ZONE ACCESS
+            </div>
+            <div class="server-address">yiotoms.playit.plus:1974</div>
+            <div style="margin: 20px 0; font-size: 1.2em;">
+                <strong>🔐 Access Code:</strong> antiyiotoms<br>
+                <strong>👥 Survivor Capacity:</strong> 11 Maximum<br>
+                <strong>🎮 Difficulty:</strong> Apocalypse Mode<br>
+                <strong>🏙️ Spawn Locations:</strong> Knox County + Louisville Neighborhoods
+            </div>
+        </div>
+
+        <div class="important-note">
+            <strong>🛡️ CRITICAL SURVIVAL NOTES:</strong><br>
+            • <strong>Load Order:</strong> Dependencies MUST be installed first (damnlib, modoptions, Arsenal[26])<br>
+            • <strong>Compatibility:</strong> All survivors need identical 30-mod setup to connect<br>
+            • <strong>Performance:</strong> Server runs 24/7 with auto-saves every 10 minutes<br>
+            • <strong>Spawning:</strong> Choose from traditional Knox County or 5 Louisville neighborhoods<br>
+            • <strong>Arsenal Integration:</strong> Brita's weapons require Arsenal[26] - install in correct order!<br>
+            • <strong>Server Stability:</strong> Tested with 30 mods - zero conflicts detected
+        </div>
+
+        <div class="footer">
+            <div style="font-size: 1.3em; margin-bottom: 15px;">
+                <strong>🧟‍♂️ Welcome to the Ultimate Apocalypse 🧟‍♂️</strong>
+            </div>
+            <div style="margin-bottom: 10px;">
+                <strong>32 Mods Active:</strong> Enhanced Weapons | Tactical Gear | Vehicle Expansion | Luxury Cars | UI Improvements | Quality of Life Features
+            </div>
+            <div>
+                Stay vigilant. Coordinate with fellow survivors. Master the expanded arsenal. The undead hordes await your arrival in Louisville...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let installedMods = 0;
+        const totalMods = 32;
+
+        function updateProgress() {
+            installedMods++;
+            const percentage = (installedMods / totalMods) * 100;
+            
+            document.getElementById('progressBar').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = installedMods + ' / ' + totalMods + ' Mods Installed';
+            
+            if (installedMods === totalMods) {
+                document.getElementById('progressText').innerHTML = '🎉 ALL 32 MODS INSTALLED! Ready for EL NOPALIPSIS! 🎉';
+                document.getElementById('progressBar').style.background = 'linear-gradient(45deg, #ffd700, #ffed4e)';
+            }
+        }
+
+        // Add dynamic zombie-like effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Randomly animate blood drips
+            const bloodDrips = document.querySelectorAll('.blood-drip');
+            bloodDrips.forEach((drip, index) => {
+                drip.style.animationDelay = Math.random() * 8 + 's';
+            });
+            
+            // Add eerie glow effect to random table rows
+            setInterval(() => {
+                const rows = document.querySelectorAll('.mods-table tr:not(.category-header)');
+                const randomRow = rows[Math.floor(Math.random() * rows.length)];
+                if (randomRow) {
+                    randomRow.style.boxShadow = '0 0 25px rgba(255, 0, 0, 0.4)';
+                    
+                    setTimeout(() => {
+                        randomRow.style.boxShadow = '';
+                    }, 1500);
+                }
+            }, 10000);
+
+            // Infected text glitch effect on title
+            setInterval(() => {
+                const title = document.querySelector('.main-title');
+                title.style.filter = 'hue-rotate(' + Math.random() * 20 + 'deg)';
+                
+                setTimeout(() => {
+                    title.style.filter = '';
+                }, 200);
+            }, 15000);
+        });
+    </script>
+</body>
+</html>
